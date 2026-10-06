@@ -31,6 +31,9 @@ public final class DemoApp {
 
     public static void main(String[] args) throws Exception {
         int port = Integer.parseInt(env("PORT", "8203"));
+        if (args.length > 0 && args[0].equals("--healthcheck")) {
+            System.exit(healthy(port) ? 0 : 1);
+        }
         ConcurrencyModel model = ConcurrencyModel.valueOf(env("CONCURRENCY_MODEL", "VIRTUAL_THREADS"));
         String siteDir = System.getenv("SITE_DIR");
         Path site = siteDir != null ? Path.of(siteDir) : SiteResources.extractToTempDirectory();
@@ -99,6 +102,18 @@ public final class DemoApp {
 
         server.get("/*", StaticFiles.from(site).cacheControl("public, max-age=60").build());
         return server;
+    }
+
+    /** For the container health check: the image has no curl, so the jar probes itself. */
+    private static boolean healthy(int port) {
+        try {
+            var request = java.net.http.HttpRequest.newBuilder(java.net.URI.create("http://127.0.0.1:" + port + "/healthz"))
+                    .timeout(Duration.ofSeconds(3)).build();
+            return java.net.http.HttpClient.newHttpClient()
+                    .send(request, java.net.http.HttpResponse.BodyHandlers.discarding()).statusCode() == 200;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private static String requiredString(Map<String, Object> body, String field) {

@@ -1,0 +1,17 @@
+services:
+  demo:
+    build: .
+    image: socket-http-demo
+    ports:
+      - "8203:8203"
+    environment:
+      PORT: "8203"
+      # THREAD_POOL, VIRTUAL_THREADS or NIO_EVENT_LOOP
+      CONCURRENCY_MODEL: VIRTUAL_THREADS
+    healthcheck:
+      test: ["CMD", "java", "-cp", "/app/app.jar:/app/lib/*", "io.github.mgeladzerezo.sockethttp.demo.DemoApp", "--healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
