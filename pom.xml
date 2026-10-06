@@ -15,6 +15,7 @@
     <modules>
         <module>socket-http-core</module>
         <module>socket-http-demo</module>
+        <module>socket-http-bench</module>
     </modules>
 
     <properties>
