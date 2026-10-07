@@ -4,6 +4,8 @@ An HTTP/1.1 server written directly on `java.nio` sockets with zero runtime depe
 
 [![CI](https://github.com/mgeladzerezo/socket-http/actions/workflows/ci.yml/badge.svg)](https://github.com/mgeladzerezo/socket-http/actions/workflows/ci.yml)
 
+> **CI result.** On 7 October 2026 the workflow ran the complete suite on GitHub Actions (Ubuntu, Docker available) and it passed: 607 tests, 0 failures ([run 37606176390](https://github.com/mgeladzerezo/socket-http/actions/runs/37606176390)). The verification notes further down describe what had been run on this machine before that and are kept for the record.
+
 ## Status of verification (read this first)
 
 - The core test suite (parser, thread pool, server conformance, timeouts, shutdown, overload, concurrency, static files, path traversal, router, middleware) was **run and passed** earlier in the project: 579 tests, 0 failures, 1 skipped (a symlink test that needs a privilege this Windows account lacks).
