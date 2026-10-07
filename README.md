@@ -167,7 +167,7 @@ Run with `./mvnw -B verify` (see the verification status above for what has actu
 
 ## Known limitations
 
-- **Test suite not executed in this pass.** See the verification status at the top: only code up to the earlier test runs is verified by execution; later changes were compiled only.
+- **Test suite not executed in its final form.** See the verification status at the top: only code up to the earlier test runs is verified by execution; later changes were compiled only.
 - **Docker image and compose file never built or started**; the compose health check (the jar probing its own `/healthz` through `--healthcheck`) and the CI workflow have never run.
 - **No benchmark results.** The comparison with Tomcat is unmeasured, so the README makes no performance claim.
 - No TLS, no WebSocket, no HTTP/2, no `Expect` extensions beyond `100-continue`.
